@@ -1,0 +1,1 @@
+Binary card images are uploaded through git blobs in the same deploy workflow.
