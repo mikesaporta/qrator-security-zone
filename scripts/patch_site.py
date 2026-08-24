@@ -84,6 +84,15 @@ replacements = [
         '<div class="help">@FT_Mikhail · кнопка открывает Telegram с подготовленным текстом заявки.</div>',
         ''
     ),
+    (
+        '</style></head><body>',
+        '''.quickSelect{margin-top:22px}.quickSelectLabel{margin:0 0 12px;color:#91a1b1;font-size:13px}.quickPackages{display:grid;grid-template-columns:1fr 1fr;gap:12px}.quickPackage{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:18px;padding:17px 18px;border:1px solid #304255;border-radius:15px;background:#091724}.quickPackageName{min-width:0}.quickPackageName strong{display:block;font-size:16px}.quickPackageName span{display:block;margin-top:4px;color:#8293a3;font-size:12px}.quickPrice{white-space:nowrap;font-size:17px}.quickPick{min-height:40px;padding:0 15px;border:1px solid #52667b;border-radius:10px;background:transparent;color:#fff;font-weight:700;cursor:pointer;transition:.2s}.quickPick:hover{border-color:#8a58ff;background:#111e2d}@media(max-width:760px){.quickPackages{grid-template-columns:1fr}.quickPackage{grid-template-columns:1fr auto}.quickPick{grid-column:1/-1;width:100%}}
+</style></head><body>'''
+    ),
+    (
+        '<section class="section"><div class="wrap"><h2>Сравнение пакетов</h2><div class="compare" id="compare"></div></div></section>',
+        '''<section class="section"><div class="wrap"><h2>Сравнение пакетов</h2><div class="compare" id="compare"></div><div class="quickSelect"><p class="quickSelectLabel">Выберите пакет и добавьте его в корзину</p><div class="quickPackages"><div class="quickPackage"><div class="quickPackageName"><strong>Security package</strong><span>Welcome + Security</span></div><strong class="quickPrice">17 000 USDT</strong><button class="quickPick pick" data-value="17000">Добавить</button></div><div class="quickPackage"><div class="quickPackageName"><strong>Security + Lounge</strong><span>Security package + Security Lounge</span></div><strong class="quickPrice">20 000 USDT</strong><button class="quickPick pick" data-value="20000">Добавить</button></div></div></div></div></section>'''
+    ),
 ]
 
 for old, new in replacements:
