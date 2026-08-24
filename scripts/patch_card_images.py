@@ -119,13 +119,13 @@ for package_value, media_html in package_media.items():
 # remove the temporary "Фото пакета" placeholders added by patch_site.py.
 quick_package_media = {
     '17000': (
-        '<div class="quickMedia" data-package-media="17000">'
+        '<div class="quickMedia quickMedia--photo" data-package-media="17000">'
         '<img src="%s" alt="Security package — визуализация Qrator Labs" '
         'width="1925" height="1925" loading="lazy" decoding="async"></div>'
         % package_image_map['Security package']
     ),
     '20000': (
-        '<div class="quickMedia" data-package-media="20000">'
+        '<div class="quickMedia quickMedia--photo" data-package-media="20000">'
         '<img src="%s" alt="Security + Lounge — визуализация Qrator Labs" '
         'width="1536" height="1024" loading="lazy" decoding="async"></div>'
         % package_image_map['Security + Lounge']
@@ -161,6 +161,8 @@ package_css = (
     'margin:0 0 24px;background:#0b121b;border:1px solid #2f4254}'
     '.packageMedia img{width:100%;height:100%;object-fit:cover;object-position:center;'
     'display:block;background:#0b121b;image-rendering:auto}'
+    '.quickMedia--photo{padding:0}.quickMedia--photo:after{display:none}'
+    '.quickMedia--photo img{display:block;object-position:center;image-rendering:auto}'
     '.package ul{flex:1}'
     '@media(max-width:560px){.packageMedia{margin-bottom:20px;border-radius:13px}}'
 )
