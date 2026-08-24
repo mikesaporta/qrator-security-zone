@@ -1,1 +1,0 @@
-Images for sponsor landing cards are stored here as real repository files and referenced via relative paths. Do not convert to base64 in build steps.

@@ -1,1 +1,0 @@
-binary uploads handled through git blobs; temporary text files can be removed

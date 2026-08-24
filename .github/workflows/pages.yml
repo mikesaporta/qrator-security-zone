@@ -25,6 +25,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Patch approved copy
         run: python scripts/patch_site.py
+      - name: Unpack card images
+        run: |
+          mkdir -p site/assets/images
+          unzip -oq site/assets/images/qrator-card-images.zip -d site/assets/images
+          rm site/assets/images/qrator-card-images.zip
+      - name: Patch catalog card images
+        run: python scripts/patch_card_images.py
       - name: Patch final hero
         run: python scripts/fix_hero_final.py
       - name: Setup Pages
