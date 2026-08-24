@@ -4,17 +4,17 @@ import re
 path = Path('site/index.html')
 html = path.read_text(encoding='utf-8')
 
-# High-resolution images are restored into site/assets/images before this script runs.
+# Full-resolution PNG originals are committed directly to site/assets/images.
 image_map = {
-    'Welcome-зона': 'assets/images/welcome-zone.jpg',
-    'Ковер': 'assets/images/neutral-carpet.jpg',
-    'Флаги-виндеры': 'assets/images/winders.jpg',
-    'Оградительные ленты': 'assets/images/barrier-tapes.jpg',
-    'Деревянные стойки': 'assets/images/wooden-stands.jpg',
-    'Мольберт': 'assets/images/easel.jpg',
-    'Боковой вход': 'assets/images/side-entrance.jpg',
-    'Аксессуары охраны': 'assets/images/security-accessories.jpg',
-    'Брендинг девайсов': 'assets/images/device-branding.jpg',
+    'Welcome-зона': 'assets/images/welcome-zone.png',
+    'Ковер': 'assets/images/neutral-carpet.png',
+    'Флаги-виндеры': 'assets/images/winders.png',
+    'Оградительные ленты': 'assets/images/barrier-tapes.png',
+    'Деревянные стойки': 'assets/images/wooden-stands.png',
+    'Мольберт': 'assets/images/easel.png',
+    'Боковой вход': 'assets/images/side-entrance.png',
+    'Аксессуары охраны': 'assets/images/security-accessories.png',
+    'Брендинг девайсов': 'assets/images/device-branding.png',
 }
 
 items_match = re.search(r"const items=\[(.*?)\];", html, flags=re.S)
@@ -39,7 +39,7 @@ items_js = 'const items=[' + ','.join(
 html = html[:items_match.start()] + items_js + html[items_match.end():]
 
 old_cards = "function cards(arr,id){document.getElementById(id).innerHTML=arr.map(x=>`<article class=\"card\"><div class=\"thumb\">${icon(x[3])}</div><div class=\"cardBody\"><span class=\"pill\">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p></div></article>`).join('')}"
-new_cards = "function cards(arr,id){document.getElementById(id).innerHTML=arr.map(x=>`<article class=\"card\"><div class=\"thumb\">${x[4]?`<img src=\"${x[4]}\" alt=\"${x[1]} — Qrator Labs\" loading=\"lazy\">`:icon(x[3])}</div><div class=\"cardBody\"><span class=\"pill\">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p></div></article>`).join('')}"
+new_cards = "function cards(arr,id){document.getElementById(id).innerHTML=arr.map(x=>`<article class=\"card\"><div class=\"thumb\">${x[4]?`<img src=\"${x[4]}\" alt=\"${x[1]} — Qrator Labs\" loading=\"lazy\" decoding=\"async\">`:icon(x[3])}</div><div class=\"cardBody\"><span class=\"pill\">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p></div></article>`).join('')}"
 if old_cards not in html:
     raise SystemExit('Catalog render function not found')
 html = html.replace(old_cards, new_cards, 1)
