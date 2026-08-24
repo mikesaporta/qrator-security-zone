@@ -25,12 +25,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Patch approved copy
         run: python scripts/patch_site.py
-      - name: Restore high-quality catalog images
-        run: |
-          mkdir -p site/assets/images
-          base64 --decode site/assets/images/qrator-card-images-hq.b64 > /tmp/qrator-card-images-hq.zip
-          unzip -oq /tmp/qrator-card-images-hq.zip -d site/assets/images
-          rm -f /tmp/qrator-card-images-hq.zip
       - name: Patch catalog card images
         run: python scripts/patch_card_images.py
       - name: Patch final hero
