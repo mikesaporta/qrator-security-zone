@@ -79,40 +79,15 @@ html = html.replace(old_cards, new_cards, 1)
 # Use a taller media area. Lounge visuals intentionally use cover so the photo
 # always reaches every edge without letterboxing or escaping the rounded card.
 card_css = (
-    '.thumb{aspect-ratio:1.2;background:#eef0f3}'
-    '.thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;'
-    'padding:10px;background:#eef0f3;image-rendering:auto}'
+    '.thumb{aspect-ratio:1.2;background:#0b121b}'
+    '.thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;'
+    'padding:0;background:#0b121b;image-rendering:auto}'
     '.lounge .thumb{background:#0b121b}'
     '.lounge .thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;'
     'padding:0;background:#0b121b;image-rendering:auto}'
 )
 if card_css not in html:
     html = html.replace('.thumb svg{width:100%;height:100%}', '.thumb svg{width:100%;height:100%}'+card_css, 1)
-
-# Give both sponsorship options the same edge-to-edge media frame. The shared
-# aspect ratio keeps the cards balanced while object-fit:cover avoids any
-# letterboxing and overflow at every breakpoint.
-package_media = {
-    '17000': (
-        '<div class="packageMedia"><img src="%s" '
-        'alt="Security package — визуализация Qrator Labs" width="1925" height="1925" '
-        'loading="lazy" decoding="async"></div>' % package_image_map['Security package']
-    ),
-    '20000': (
-        '<div class="packageMedia"><img src="%s" '
-        'alt="Security + Lounge — визуализация Qrator Labs" width="1536" height="1024" '
-        'loading="lazy" decoding="async"></div>' % package_image_map['Security + Lounge']
-    ),
-}
-
-for package_value, media_html in package_media.items():
-    package_prefix = (
-        f'<article class="package" data-package="{package_value}">'
-        '<div class="selectedMark">✓</div>'
-    )
-    if package_prefix not in html:
-        raise SystemExit(f'Package card {package_value} not found')
-    html = html.replace(package_prefix, package_prefix + media_html, 1)
 
 # The compact package chooser below the comparison table is the primary
 # add-to-cart surface. Use the same full-resolution collages there as well and
