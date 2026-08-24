@@ -1,1 +1,1 @@
-trigger image publish
+trigger image publish 2
