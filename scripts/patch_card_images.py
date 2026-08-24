@@ -114,6 +114,47 @@ for package_value, media_html in package_media.items():
         raise SystemExit(f'Package card {package_value} not found')
     html = html.replace(package_prefix, package_prefix + media_html, 1)
 
+# The compact package chooser below the comparison table is the primary
+# add-to-cart surface. Use the same full-resolution collages there as well and
+# remove the temporary "Фото пакета" placeholders added by patch_site.py.
+quick_package_media = {
+    '17000': (
+        '<div class="quickMedia" data-package-media="17000">'
+        '<img src="%s" alt="Security package — визуализация Qrator Labs" '
+        'width="1925" height="1925" loading="lazy" decoding="async"></div>'
+        % package_image_map['Security package']
+    ),
+    '20000': (
+        '<div class="quickMedia" data-package-media="20000">'
+        '<img src="%s" alt="Security + Lounge — визуализация Qrator Labs" '
+        'width="1536" height="1024" loading="lazy" decoding="async"></div>'
+        % package_image_map['Security + Lounge']
+    ),
+}
+
+for package_value, media_html in quick_package_media.items():
+    placeholder = (
+        f'<div class="quickMedia" data-package-media="{package_value}">'
+        '<span>Фото пакета</span></div>'
+    )
+    if placeholder not in html:
+        raise SystemExit(f'Quick package media {package_value} not found')
+    html = html.replace(placeholder, media_html, 1)
+
+# The original quick chooser used a very wide banner crop. A 6:5 frame mirrors
+# the gallery cards, preserves the important content in both differently shaped
+# collages, and gives both package cards identical geometry at every breakpoint.
+html = html.replace(
+    '.quickMedia{position:relative;aspect-ratio:16/6;min-height:150px;',
+    '.quickMedia{position:relative;aspect-ratio:1.2;min-height:0;',
+    1,
+)
+html = html.replace(
+    '.quickMedia{aspect-ratio:16/7;min-height:140px}',
+    '.quickMedia{aspect-ratio:1.2;min-height:0}',
+    1,
+)
+
 package_css = (
     '.package{display:flex;flex-direction:column}'
     '.packageMedia{width:100%;aspect-ratio:1.2;border-radius:15px;overflow:hidden;'
