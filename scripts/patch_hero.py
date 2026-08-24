@@ -12,7 +12,7 @@ hero_css = '''
 html = html.replace('</style></head><body>', hero_css + '</style></head><body>', 1)
 
 pattern = r'<div class="heroVisual"><svg.*?</svg><div class="priceBox">'
-replacement = '<div class="heroVisual"><img class="heroPhoto" src="assets/qrator-hero-entrance.jpg" alt="Welcome-зона Qrator Labs"><div class="priceBox">'
+replacement = '<div class="heroVisual"><img class="heroPhoto" src="assets/qrator-hero-entrance.jpg?v=20260824-2" alt="Qrator Labs × FT Community"><div class="priceBox">'
 html, count = re.subn(pattern, replacement, html, count=1, flags=re.S)
 if count != 1:
     raise SystemExit(f'Hero visual replacement count: {count}')
