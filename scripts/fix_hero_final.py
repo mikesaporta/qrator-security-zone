@@ -10,7 +10,7 @@ hero_css = '''
 if '.heroVisual .heroPhoto' not in html:
     html = html.replace('</style></head><body>', hero_css + '</style></head><body>', 1)
 
-replacement = '<div class="heroVisual"><img class="heroPhoto" src="assets/qrator-ft-community-hero.jpg?v=final" alt="Qrator Labs × FT Community"></div>'
+replacement = '<div class="heroVisual"><img class="heroPhoto" src="assets/images/52d2c2c1-2b6e-41a9-95de-ea3806a106a4.png?v=2" alt="Qrator Labs × FT Community"></div>'
 
 patterns = [
     r'<div class="heroVisual"><svg.*?</svg><div class="priceBox">.*?</div></div>',
@@ -29,7 +29,6 @@ for pattern in patterns:
 if count != 1:
     raise SystemExit('Hero block was not found')
 
-# Safety: remove any leftover package-price overlay inside hero.
 html = re.sub(r'<div class="priceBox">.*?</div>', '', html, flags=re.S)
 
 path.write_text(html, encoding='utf-8')
