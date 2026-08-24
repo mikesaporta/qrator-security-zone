@@ -76,12 +76,21 @@ if old_cards not in html:
     raise SystemExit('Catalog render function not found')
 html = html.replace(old_cards, new_cards, 1)
 
+# Preserve the full composition of the two portrait/square catalog visuals.
+for image_path in ('assets/images/security-accessories.png', 'assets/images/device-branding.png'):
+    html = html.replace(
+        f'<article class="card"><div class="thumb"><img src="{image_path}"',
+        f'<article class="card card--contain"><div class="thumb"><img src="{image_path}"',
+        1,
+    )
+
 # Use a taller media area. Lounge visuals intentionally use cover so the photo
 # always reaches every edge without letterboxing or escaping the rounded card.
 card_css = (
     '.thumb{aspect-ratio:1.2;background:#0b121b}'
     '.thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;'
     'padding:0;background:#0b121b;image-rendering:auto}'
+    '.card--contain .thumb img{object-fit:contain;object-position:center;padding:0;background:#0b121b}'
     '.lounge .thumb{background:#0b121b}'
     '.lounge .thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;'
     'padding:0;background:#0b121b;image-rendering:auto}'
@@ -137,7 +146,7 @@ package_css = (
     '.packageMedia img{width:100%;height:100%;object-fit:cover;object-position:center;'
     'display:block;background:#0b121b;image-rendering:auto}'
     '.quickMedia--photo{padding:0}.quickMedia--photo:after{display:none}'
-    '.quickMedia--photo img{display:block;object-position:center;image-rendering:auto}'
+    '.quickMedia--photo img{display:block;object-fit:contain;object-position:center;background:#0b121b;image-rendering:auto}'
     '.package ul{flex:1}'
     '@media(max-width:560px){.packageMedia{margin-bottom:20px;border-radius:13px}}'
 )
