@@ -4,7 +4,7 @@ import re
 path = Path('site/index.html')
 html = path.read_text(encoding='utf-8')
 
-# Card images are unpacked into site/assets/images before this script runs.
+# High-resolution images are restored into site/assets/images before this script runs.
 image_map = {
     'Welcome-зона': 'assets/images/welcome-zone.jpg',
     'Ковер': 'assets/images/neutral-carpet.jpg',
@@ -44,7 +44,13 @@ if old_cards not in html:
     raise SystemExit('Catalog render function not found')
 html = html.replace(old_cards, new_cards, 1)
 
-card_css = '.thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}'
+# Use a taller media area and contain the complete image without cropping.
+# The neutral background makes letterboxing intentional for vertical and square mockups.
+card_css = (
+    '.thumb{aspect-ratio:1.2;background:#eef0f3}'
+    '.thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;'
+    'padding:10px;background:#eef0f3;image-rendering:auto}'
+)
 if card_css not in html:
     html = html.replace('.thumb svg{width:100%;height:100%}', '.thumb svg{width:100%;height:100%}'+card_css, 1)
 
