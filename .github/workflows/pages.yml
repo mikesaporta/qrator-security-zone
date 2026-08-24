@@ -25,8 +25,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Patch approved copy
         run: python scripts/patch_site.py
-      - name: Patch clean hero without price overlay
-        run: python scripts/patch_hero_v2.py
+      - name: Build stable hero image
+        run: |
+          base64 -d site/assets/qrator-ft-community-hero.jpg.b64 > site/assets/qrator-ft-community-hero.jpg
+          rm site/assets/qrator-ft-community-hero.jpg.b64
+      - name: Patch final hero
+        run: python scripts/fix_hero_final.py
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
