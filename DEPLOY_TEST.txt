@@ -1,3 +1,1 @@
-FT deploy connection check
-Triggered: 2026-08-24 09:44 +03:00
-Pages enabled by owner; redeploy requested.
+trigger image publish
