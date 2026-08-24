@@ -17,6 +17,14 @@ image_map = {
     'Брендинг девайсов': 'assets/images/device-branding.png',
 }
 
+lounge_image_map = {
+    'Уютная зона ожидания': 'assets/images/security-lounge.png',
+    'Коктейльные столы': 'assets/images/cocktail-tables.png',
+    'Текстильные накладки': 'assets/images/table-covers.png',
+    'Charging Hub': 'assets/images/charging-hub.png',
+    'Refresh Station': 'assets/images/refresh-station.png',
+}
+
 items_match = re.search(r"const items=\[(.*?)\];", html, flags=re.S)
 if not items_match:
     raise SystemExit('Catalog items array not found')
@@ -38,18 +46,40 @@ items_js = 'const items=[' + ','.join(
 ) + '];'
 html = html[:items_match.start()] + items_js + html[items_match.end():]
 
+lounge_match = re.search(r"const lounge=\[(.*?)\];", html, flags=re.S)
+if not lounge_match:
+    raise SystemExit('Lounge items array not found')
+
+# Keep the cards in the guest journey order and pair every service with the
+# matching full-resolution visual supplied for the Security Lounge.
+lounge = [
+    ['LOUNGE','Уютная зона ожидания','Комфортная точка ожидания у входа','table', lounge_image_map['Уютная зона ожидания']],
+    ['LOUNGE','Коктейльные столы','+Напиток в фирменном цвете Qrator Labs','table', lounge_image_map['Коктейльные столы']],
+    ['LOUNGE','Текстильные накладки','Фирменные накладки / скатерти','table', lounge_image_map['Текстильные накладки']],
+    ['LOUNGE','Charging Hub','USB-C, Lightning, USB-A','hub', lounge_image_map['Charging Hub']],
+    ['LOUNGE','Refresh Station','Шоты, салфетки, мятные конфеты, фрукты','refresh', lounge_image_map['Refresh Station']],
+]
+
+lounge_js = 'const lounge=[' + ','.join(
+    "['%s','%s','%s','%s','%s']" % tuple(x) for x in lounge
+) + '];'
+html = html[:lounge_match.start()] + lounge_js + html[lounge_match.end():]
+
 old_cards = "function cards(arr,id){document.getElementById(id).innerHTML=arr.map(x=>`<article class=\"card\"><div class=\"thumb\">${icon(x[3])}</div><div class=\"cardBody\"><span class=\"pill\">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p></div></article>`).join('')}"
 new_cards = "function cards(arr,id){document.getElementById(id).innerHTML=arr.map(x=>`<article class=\"card\"><div class=\"thumb\">${x[4]?`<img src=\"${x[4]}\" alt=\"${x[1]} — Qrator Labs\" loading=\"lazy\" decoding=\"async\">`:icon(x[3])}</div><div class=\"cardBody\"><span class=\"pill\">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p></div></article>`).join('')}"
 if old_cards not in html:
     raise SystemExit('Catalog render function not found')
 html = html.replace(old_cards, new_cards, 1)
 
-# Use a taller media area and contain the complete image without cropping.
-# The neutral background makes letterboxing intentional for vertical and square mockups.
+# Use a taller media area. Lounge visuals intentionally use cover so the photo
+# always reaches every edge without letterboxing or escaping the rounded card.
 card_css = (
     '.thumb{aspect-ratio:1.2;background:#eef0f3}'
     '.thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;'
     'padding:10px;background:#eef0f3;image-rendering:auto}'
+    '.lounge .thumb{background:#0b121b}'
+    '.lounge .thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;'
+    'padding:0;background:#0b121b;image-rendering:auto}'
 )
 if card_css not in html:
     html = html.replace('.thumb svg{width:100%;height:100%}', '.thumb svg{width:100%;height:100%}'+card_css, 1)
