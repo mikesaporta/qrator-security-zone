@@ -1,1 +1,1 @@
-trigger image publish 3
+deploy catalog photos
