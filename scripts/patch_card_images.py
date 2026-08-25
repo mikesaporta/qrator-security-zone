@@ -26,7 +26,7 @@ lounge_image_map = {
 }
 
 package_image_map = {
-    'Security package': 'assets/images/security-package-collage.png',
+    'Security package': 'assets/images/security-package-collage-new.jpg',
     'Security + Lounge': 'assets/images/security-lounge-package-collage.png',
 }
 
@@ -106,7 +106,7 @@ quick_package_media = {
     '17000': (
         '<div class="quickMedia quickMedia--photo" data-package-media="17000">'
         '<img src="%s" alt="Security package — визуализация Qrator Labs" '
-        'width="1925" height="1925" loading="lazy" decoding="async"></div>'
+        'width="1400" height="1400" loading="lazy" decoding="async"></div>'
         % package_image_map['Security package']
     ),
     '20000': (
